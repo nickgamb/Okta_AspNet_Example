@@ -1,0 +1,18 @@
+@page
+@model ViewClaimsModel
+@{
+    ViewData["Title"] = "Claims";
+}
+
+@using System.Security.Claims;
+
+<section id="claims-section" class="u-content-space">
+    <div class="text-center">
+        <h2 class="h1 font-weight-light mb-1">@User.Identity.Name's Claims</h2>
+        @foreach (var claim in ((ClaimsIdentity)User.Identity).Claims)
+        {
+            <dt title="@claim.Type">@claim.Type</dt>
+            <dd>@claim.Value</dd>
+        }
+    </div>
+</section>

@@ -1,0 +1,174 @@
+﻿@using System.Security.Claims;
+@{
+  //Try to parse out the profile claim to get the users profile image.
+  var profileClaimType = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(x => x.Type == "profile");
+  var profile = "";
+  try
+  {
+    profile = profileClaimType.Value;
+
+    //If the profile claim is found, but is not populated, use a generic image.
+    if (profile == null || profile == "")
+    {
+      profile = "assets/img-temp/ava/user-unknown.jpg";
+    }
+  }
+  catch
+  {
+    //No profile claim present! Use a generic image. 
+    profile = "assets/img-temp/ava/user-unknown.jpg";
+  }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head -->
+  <head>
+    <title>Okta ASPNET Example Application</title>
+
+    <!-- Meta -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="keywords" content="Okta ASPNET Example Application">
+    <meta name="description" content="Okta ASPNET Example Application">
+    <meta name="author" content="https://github.com/nickgamb/Okta_AspNet_Example">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Web Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Playfair+Display:400,700%7COpen+Sans:300,400,700" rel="stylesheet">
+
+    <!-- Bootstrap Styles -->
+    <link rel="stylesheet" type="text/css" href="assets/vendors/bootstrap/css/bootstrap.min.css">
+
+    <!-- Components Vendor Styles -->
+    <link rel="stylesheet" type="text/css" href="assets/vendors/font-awesome/css/fontawesome-all.min.css">
+
+    <!-- Theme Styles -->
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+
+    <!-- Demo Custome Code (demo page only) -->
+    <style type="text/css">
+      /* Button Spaces*/
+      .demo-btn-space .btn,
+      .demo-progress-space .progress {
+        margin-bottom: 10px;
+      }
+
+      /* About Section */
+      .demo-about-section {
+        position: relative;
+        padding-top: 6.25rem;
+      }
+
+      /* Download Section */
+      .demo-download-section {
+        position: relative;
+        z-index: 1;
+        margin: -60px 0;
+      }
+
+      /* Google Fonts */
+      .demo-fonts-box {
+        padding: 30px;
+        line-height: 2;
+        letter-spacing: 2px;
+      }
+
+      .demo-fonts-box__item {
+        line-height: 1;
+      }
+      .demo-fonts-box__item-xs {
+        line-height: 1;
+        font-size: 30px;
+      }
+      .demo-fonts-box__item-xl {
+        line-height: 1;
+        font-size: 90px;
+      }
+    </style>
+    <!-- End Demo Custome Code (demo page only) -->
+  </head>
+  <!-- End Head -->
+    <body id="js-home">
+    <!-- Header -->
+    <header role="header">
+      <!-- Navbar Dark -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container">
+            <a class="navbar-brand" href="index.html">
+              <img src="https://www.okta.com/sites/default/files/Dev_Logo-02_Large.png" alt="Stream UI Kit" style="width: 45px;">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+              <ul class="navbar-nav ml-auto mr-sm-2 mt-2 mt-lg-0">
+                <li class="nav-item active mr-3">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item mr-3">
+                  <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item mr-3">
+                  <a class="nav-link" href="#">Services</a>
+                </li>
+                <li class="nav-item mr-3">
+                  <a class="nav-link" href="#">Our Work</a>
+                </li>
+                <li class="nav-item mr-3">
+                  <a class="nav-link" href="#">Contacts</a>
+                </li>
+              </ul>
+
+              <ul class="navbar-nav">
+              @if (User.Identity.IsAuthenticated)
+              {
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="rounded-circle u-box-shadow-sm mr-2" width="35" height="35" src=@profile alt="Username"> @User.Identity.Name <i class="fas fa-angle-down small ml-1"></i>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Account Settings</a>
+                    <a class="dropdown-item" href="/ViewClaims#claims-section">View Claims</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-controller="Account" asp-action="SignOut">Sign Out</a>
+                  </div>
+                </li>
+              }
+              else
+              {
+                <li class="nav-item mr-3">
+                  <a class="btn btn-light" asp-controller="Account" asp-action="SignIn">Sign In</a>
+                </li>
+                <li class="nav-item mr-3">
+                  <a class="btn btn-info" href="/SignUp">Sign Up</a>
+                </li>
+              }
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- End Navbar Dark -->
+    </header>
+    <!-- End Header -->
+    @RenderBody()
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - Okta_AspNet_Example - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

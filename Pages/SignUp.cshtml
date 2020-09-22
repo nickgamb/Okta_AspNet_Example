@@ -1,0 +1,69 @@
+@page
+@model SignUpModel
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+
+<form method="post">
+    <section class="u-content-space">
+    <div class="container"></div>
+    <header class="w-md-50 mx-auto text-center mb-7">
+        <h2 class="h1 font-weight-light mb-1">Sign Up </h2>
+        <p>Create a new account and validate via email.</p>
+    </header>
+
+<!-- Pilled Form Controls -->
+<div class="row justify-content-center">
+<div class="col-lg-6 mb-3">
+    <div class="card">
+        <!-- Card Header -->
+        <div class="card-header">
+            <h3 class="h6 mb-0">Sign Up</h3>
+        </div>
+        <!-- End Card Header -->
+
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="form-group mb-4">
+                <label for="inputLeftIcon1" class="u-font-size-90">Email</label>
+                <span class="form-icon-wrapper">
+                    <span class="form-icon form-icon--left">
+                        <i class="fas fa-user-circle form-icon__item"></i>
+                    </span>
+                    <input type="email" asp-for="EmailInput" class="form-control form-icon-input-left form--pill" id="inputLeftIcon1" aria-describedby="emailHelp" placeholder="jsmith@@domain.com">
+                </span>
+            </div>
+            <div class="form-group mb-4">
+                <label for="inputLeftIcon1" class="u-font-size-90">First Name</label>
+                <span class="form-icon-wrapper">
+                    <span class="form-icon form-icon--left">
+                        <i class="fas fa-user-circle form-icon__item"></i>
+                    </span>
+                    <input type="text" asp-for="FirstNameInput" class="form-control form-icon-input-left form--pill" id="inputLeftIcon1" aria-describedby="emailHelp" placeholder="John">
+                </span>
+            </div>
+            <div class="form-group mb-4">
+                <label for="inputLeftIcon1" class="u-font-size-90">Last Name</label>
+                <span class="form-icon-wrapper">
+                    <span class="form-icon form-icon--left">
+                        <i class="fas fa-user-circle form-icon__item"></i>
+                    </span>
+                    <input type="text" asp-for="LastNameInput" class="form-control form-icon-input-left form--pill" id="inputLeftIcon1" aria-describedby="emailHelp" placeholder="Smith">
+                </span>
+            </div>
+
+            <hr class="my-4">
+
+            <button asp-page-handler="Signup" id="SignupSubmitButton" class="btn btn-dark btn--pill">Sign Up</button>
+
+        </div>
+        <!-- End Card Body -->
+    </div>
+</div>
+ </div>
+ </div>
+<!-- End Pilled Form Controls -->
+</section>
+</form>
+
